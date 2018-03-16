@@ -1,0 +1,40 @@
+Name: Jonathan Woong
+UCLA ID: 804205763
+
+Collaborators:
+
+-------------------------------------------------------------------------------
+
+Response to Exercise 1: 
+
+The name of the scheduling algorithm is: Cooperative scheduling that emulates round robin.
+
+
+(Exercise 2 is a coding exercise)
+
+
+Response to Exercise 3:
+
+Average turnaround time for scheduling_algorithm 0: (1277+1278+1279+1280)/4 = 1278.5ms
+Average turnaround time for scheduling_algorithm 1: (320+640+960+1280)/4 = 800ms
+
+Average wait time for scheduling_algorithm 0: (0+1+2+3)/4 = 1.5ms
+Average wait time for scheduling_algorithm 1: (0+320+640+960)/4 = 480ms
+
+
+Exercise 4:
+
+Did you complete Exercise 4A, Exercise 4B, or both for extra credit? Only 4A.
+
+
+Exercise 5: The timer interrupt occured during process 4, which was unable to print to screen. The output of the screen shows 12341234123412341231 where the last number in that sequence should be a 4 instead of a 1
+
+
+(Exercise 6 is a coding exercise)
+
+
+Anything else you'd like us to know: I started exercise 4B but could not finish, so ignore the extra code in schedos-kern.c
+
+
+
+Extra credit exercises:

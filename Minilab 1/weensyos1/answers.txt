@@ -1,0 +1,49 @@
+CS 111 
+Lab 1A
+Jonathan Woong
+804205763
+
+Exercise 1:
+	Yes, each process has its own registers. sys_getpid() will return the correct value located in the %eax register.
+
+Exercise 2:
+	do_fork loops through proc_array to find an empty process descriptor and make that the child. It then copies the parent's registers and stack, and set the child as runnable. The child's return value is set to 0. If no child can be made, return -1.
+
+	copy_stack calculates the necessary stack boundaries for the src and dest processes. It then uses memcpy to copy the src stack to the dest stack and finally sets the dest esp pointer.
+
+Exercise 3:
+	pid_t wait_pid is added to process_t in mpos-kern.h to allow one process to wait on another. The process A that calls sys_wait(B) will get wait_pid = B, and process A's process state is set to P_BLOCKED. Upon exiting, if a process A is waiting on process B, process B returns process A's exit status and process B becomes runnable again. Process A is removed from the wait queue by setting its wait_pid to 0.
+
+Exercise 4:
+	This is solved in exercise 3.
+
+Exercise 6:
+	pid_t sys_newthread(void (*start_function)(void))
+	{
+		int i=1; // don't read proc_array[0]
+		pid_t childPid; // return this upon success
+		int foundEmptyProcessDescriptor=0; // 0 = NO, 1 = YES
+		process_t *child = NULL; 
+
+		///// FIND EMPTY PROCESS DESCRIPTOR
+		for (i; i<NPROCS; i++) {
+			if (proc_array[i].p_state == P_EMPTY)
+			{
+				childPid = i; 
+				child = &proc_array[i];
+				foundEmptyProcessDescriptor=1;
+				break;
+			}
+		}
+
+		///// CREATE NEW THREAD
+		if (foundEmptyProcessDescriptor){
+			child->p_state = P_RUNNABLE;
+			child->p_registers.reg_eax = 0;
+			child->p_registers.reg_eip = start_function;
+			child->p_registers.reg_esp = PROC1_STACK_ADDR + childPid*PROC_STACK_SIZE;
+			return childPid; 
+		}
+		else
+			return -1;
+	}

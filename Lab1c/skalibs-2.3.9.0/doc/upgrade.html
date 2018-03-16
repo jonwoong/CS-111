@@ -1,0 +1,200 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Language" content="en" />
+    <title>skalibs: how to upgrade</title>
+    <meta name="Description" content="skalibs: How to upgrade" />
+    <meta name="Keywords" content="skalibs installation upgrade" />
+    <!-- <link rel="stylesheet" type="text/css" href="http://skarnet.org/default.css" /> -->
+  </head>
+<body>
+
+<p>
+<a href="index.html">skalibs</a><br />
+<a href="http://skarnet.org/software/">Software</a><br />
+<a href="http://skarnet.org/">skarnet.org</a>
+</p>
+
+<h1> What has changed in skalibs </h1>
+
+<h2> in 2.3.9.0 </h2>
+
+<ul>
+ <li> New functions: <tt>bitarray_firstclear_skip</tt> and
+<tt>bitarray_firstset_skip</tt>. </li>
+</ul>
+
+<h2> in 2.3.8.3 </h2>
+
+<ul>
+ <li> No functional changes. </li>
+</ul>
+
+<h2> in 2.3.8.2 </h2>
+
+<ul>
+ <li> No functional changes. </li>
+</ul>
+
+<h2> in 2.3.8.1 </h2>
+
+<ul>
+ <li> No functional changes. </li>
+</ul>
+
+<h2> in 2.3.8.0 </h2>
+
+<ul>
+ <li> The <tt>/etc/leapsecs.dat</tt> file is no longer necessary. </li>
+</ul>
+
+<h2> in 2.3.7.1 </h2>
+
+<ul>
+ <li> No functional changes. </li>
+</ul>
+
+<h2> in 2.3.7.0 </h2>
+
+<ul>
+ <li> New functions: <tt>atomic_rm_rf()</tt>, <tt>atomic_rm_rf_tmp()</tt>. </li>
+</ul>
+
+<h2> in 2.3.6.1 </h2>
+
+<ul>
+ <li> No functional changes. </li>
+</ul>
+
+<h2> in 2.3.6.0 </h2>
+
+<ul>
+ <li> New function: <tt>openreadnclose_nb</tt>. </li>
+</ul>
+
+<h2> in 2.3.5.2 </h2>
+
+<ul>
+ <li> No functional changes. </li>
+</ul>
+
+<h2> in 2.3.5.1 </h2>
+
+<ul>
+ <li> No functional changes. </li>
+</ul>
+
+<h2> in 2.3.5.0 </h2>
+
+<ul>
+ <li> New functions: <tt>bitarray_count()</tt>, <tt>openwritevnclose_at()</tt> </li>
+</ul>
+
+<h2> in 2.3.4.0 </h2>
+
+<ul>
+ <li> New function: <tt>stat_at()</tt> </li>
+ <li> The rest of the changes are bugfixes or QoL. </li>
+</ul>
+
+<h2> in 2.3.3.0 </h2>
+
+<ul>
+ <li> New sha512 functions, see <tt>skalibs/sha512.h</tt> </li>
+</ul>
+
+<h2> in 2.3.2.0 </h2>
+
+<ul>
+ <li> New macro: <tt>gid0_scan()</tt> </li>
+</ul>
+
+<h2> in 2.3.1.3 </h2>
+
+<ul>
+ <li> Bugfix release, no functional changes. </li>
+</ul>
+
+<h2> in 2.3.1.2 </h2>
+
+<ul>
+ <li> The child_spawn* family of functions now resets all signals
+to their default values when spawning a program on systems with
+<a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/posix_spawn.html">posix_spawn()</a>.
+This should not change anything - it's just paranoia. </li>
+ <li> Minor bugfixes. </li>
+</ul>
+
+<h2> in 2.3.1.1 </h2>
+
+<ul>
+ <li> Bugfix release, no functional changes. </li>
+</ul>
+
+<h2> in 2.3.1.0 </h2>
+
+<ul>
+ <li> wait_status() now returns 256 + signal number when WIFSIGNALED(). </li>
+ <li> new macro wait_estatus() to get WIFSIGNALED information in an exit code. </li>
+ <li> new functions in djbunix.h: hiercopy(), hiercopy_tmp() </li>
+</ul>
+
+<h2> in 2.3.0.1 </h2>
+
+<ul>
+ <li> wait_status() now returns 256 (instead of 126) when WIFSIGNALED(). </li>
+</ul>
+
+<h2> in 2.3.0.0 </h2>
+
+<ul>
+ <li> buffer_getvall and buffer_putvall have a different interface. (And now work.) </li>
+ <li> buffer_read and buffer_write are now deprecated. </li>
+ <li> various siovec additions, such as siovec_trunc </li>
+</ul>
+
+<h2> in 2.2.1.0 </h2>
+
+<ul>
+ <li> unixconnection added. </li>
+ <li> sig_name and sig_number added. </li>
+</ul>
+
+<h2> in 2.2.0.0 </h2>
+
+<ul>
+ <li> TAI64 and TAI64N conversion functions revisited.
+API slightly changed, made more consistent. </li>
+</ul>
+
+<h2> in 2.1.0.0 </h2>
+
+<ul>
+ <li> unixmessage_drop added, part of unixmessage/skaclient hardening against fd leakage </li>
+ <li> unixmessage_sender_flush return code aligned with the convention in the rest of skalibs </li>
+ <li> unixmessage_sender_flush now handles short writes </li>
+ <li> skaclient_start(_async) prototype changed: now takes an option argument </li>
+</ul>
+
+<h2> in 2.0.0.0 </h2>
+
+<ul>
+ <li> The packaging system has completely changed. </li>
+ <li> Programs should now link with <tt>-lskarnet</tt> followed by the appropriate
+sysdeps links. </li>
+ <li> No compatibility is ensured. Most APIs haven't changed, but no guarantee
+is offered. </li>
+ <li> The most important change is probably the disparition of <tt>struct tai</tt>
+and <tt>struct taia</tt>, replaced with the <tt>tai_t</tt> and <tt>tain_t</tt>
+types. Attosecond precision has been removed - processor speed is almost capped now,
+and it looks like nanosecond precision will be enough for the foreseeable future. </li>
+ <li> Buffer implementation has changed, and some interfaces too, mainly the
+buffer_flush and bufalloc_flush return code. </li>
+ <li> skaclient, skalibs' client-server communication suite, has been
+entirely reimplemented: it's now using the new "unixmessage" set of primitives
+for easier fd-passing. </li>
+</ul>
+
+</body>
+</html>

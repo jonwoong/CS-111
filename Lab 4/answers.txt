@@ -1,0 +1,80 @@
+Name: Jonathan Woong
+UID: 804205763
+W16 - CS 111
+Lab 4
+
+///// Note to grader /////
+
+1. I only completed part 1 and part 3
+2. All graphs located in graphs.pdf
+3. $ make check will run all scripts
+
+./Unprotected-Non-Yield-Script.sh 
+	will run ./addtest —-threads=1 —-iterations=I 
+	for I=10,20,30,40,50,60,70,80,90,100
+	will output results to UNY-Results
+
+./Unprotected-Yield-Script.sh
+	will run ./addtest --threads=T --iterations=I
+	for T=1,2,4,10,50,90
+	and I=10,100,1000,10000
+	will output results to UY-Results
+
+./Mutex-Script.sh
+	will run ./addtest --sync=m --threads=T --iterations=I
+	for T=1,2,4,10,50,90
+	and I=10,100,1000,10000
+	both YIELD and NON-YIELD
+	will output results to MNY-Results and MY-Results
+
+./Spin-Script.sh
+	will run ./addtest --sync=s --threads=T --iterations=I
+	for T=1,2,4,10,50,90
+	and I=10,100,1000,10000
+	both YIELD and NON-YIELD
+	will output results to SNY-Results and SY-Results
+
+./CAS-Script.sh
+	will run ./addtest --sync=c --threads=T --iterations=I
+	for T=1,2,4,10,50,90
+	and I=10,100,1000,10000
+	both YIELD and NON-YIELD
+	will output results to CASNY-Results and CASY-Results
+
+./runAllScripts.sh
+	will run all scripts mentioned above
+
+///// Questions /////
+
+1.1:	
+	1. ~10 threads and ~800 iterations is when my program begins to consistenly fail. This is because there is a race condition in the add function, where many threads will be attempting to access the same global variable "counter" at the same time. Increasing the iteration and thread count will increase the likelyhood that a race condition occurs. 
+
+	2. A small number of iterations gives each thread less overall time (from start of thread to end of thread) to have a race condition with another thread. 
+
+1.2:
+	1. The average cost per operation drops because the CPU can make use of temporal and spatial locality better when the operation count increases to a high number.
+
+	2. We know the correct cost should simply be the cost of waiting for yield + the cost of actually doing the +1 and -1 operations.
+
+	3. Yield runs are much slower because all of the extra time is spent doing context switches.
+
+	4. Yes, because in practical applications, the CPU is constantly yielding to give CPU time to other processes. This is more accurate than timing a program that never yields.
+
+1.3:
+	1. They perform similarly because for low numbers of threads there is not much competition to acquire the locks.
+
+	2. As the number of threads rises, the competition for aquiring locks grows as well, so the time spent waiting for the lock will increase and slow down the program as a whole.
+
+	3. Spin locks are expensive because they loop forever waiting for the lock to be available, this takes up valuable CPU time.
+
+3.1: 
+	1. The mutex must be held when pthread_cond_wait is called because its function is to release the mutex after the process sleeps. It cannot release the mutex if the mutex is not held at the time pthread_cond_wait is called. If the mutex is not held and this function is called, it will attempt to release a mutex that it does not hold, which is an error.
+
+	2. The mutex must be released when the waiting thread is blocked because it allows other threads to obtain the mutex while the waiting thread sleeps. This means no CPU time is wasted waiting on a sleeping thread.
+
+ 	3. The mutex must be reacquired when the calling thread resumes because the thread has no idea whether it holds a lock or not. It should be able to resume its operations after waking up without any interruption and without any error. This means that the mutex must be reacquired before the thread wakes up so that the thread may resume its work as if no mutex had ever existed.
+
+ 	4. This must be done inside of pthread_cond_wait because if the caller releases the mutex before calling pthread_cond_wait, another thread may come and acquire the mutex before pthread_cond_wait gets a chance to. This defeats the purpose of having pthread_cond_wait to begin with. Having everything done inside of the function ensures atomic behavior.
+
+ 	5. This can only be done using system calls because the handling of mutexes is kernel-level only. Allowing user-mode manipulation of mutexes can lead to undesired outcomes. The kernel controls thread operation, not the user.
+
